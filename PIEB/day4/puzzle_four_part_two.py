@@ -1,6 +1,5 @@
 import time
 
-
 def points_computation(win_cartes, own_cards):
     win_cards = win_cartes.split(" ")
     own_cards = own_cards.split(" ")
@@ -13,32 +12,28 @@ def points_computation(win_cartes, own_cards):
 
 
 def game_4(file_path):
-    line_points = []  # Liste pour stocker les points de chaque ligne
-    additional_copies = []  # Liste pour garder une trace des copies supplémentaires
-
     with open(file_path, 'r') as file:
-        for line in file:
-            parts = line.strip().split(":")
-            winning_numbers, own_numbers = parts[1].split("|")
-            match = points_computation(winning_numbers.strip(), own_numbers.strip())
-            line_points.append(match)
+        all_lines = file.readlines()
+        cards_copies = [1] * len(all_lines)
 
-            # Mettre à jour les copies supplémentaires pour les lignes futures
-            while len(additional_copies) < len(line_points):
-                additional_copies.append(0)
-            for i in range(1, match):
-                if i < len(additional_copies):
-                    additional_copies[i] += 1
+        for line_idx, line in enumerate(all_lines):
+            line = ' '.join(line.split())
+            line = line.split(":")[1].strip()
+            line = line.split("|")
+            print(line)
+            match = points_computation(line[0].strip(), line[1].strip())
 
-    # Calculer le total des points en tenant compte des copies
-    total_points = sum(points * (1 + additional_copies[i]) for i, points in enumerate(line_points))
+            copies_of_current = cards_copies[line_idx]
+            for i in range(match):
+                cards_copies[line_idx + 1 + i] += copies_of_current
 
-    return total_points
+            print(sum(cards_copies))
+            print(f"Card {line_idx} => {cards_copies=}")
+        return cards_copies
 
 start = time.time()
-#file_path = '../../Input/puzzle_4.txt'
-file_path = '../test.txt'
-print(f"final result = {game_4(file_path)}")
+file_path = 'puzzle_4.txt'
+print(f"final result = {sum(game_4(file_path))}")
 end = time.time()
 elapsed = end - start
 print(f"time spent = {elapsed} seconds")
