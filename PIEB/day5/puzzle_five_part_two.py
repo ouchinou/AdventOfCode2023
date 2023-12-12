@@ -77,6 +77,6 @@ def process_almanac(file_path):
     return None
 
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_five.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_5.txt'
 lowest_location = process_almanac(file_path)
 print(f"The lowest location is: {lowest_location}")

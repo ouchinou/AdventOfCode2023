@@ -16,7 +16,7 @@ def is_game_possible(line: str) -> bool:
     return True
 
 
-with open('../../Repository/AdventOfCode2023/Input/puzzle_two.txt', 'r') as file:
+with open('../../Repository/AdventOfCode2023/Input/puzzle_2.txt', 'r') as file:
     for index, line in enumerate(file):
         if is_game_possible(line):
             game_id = int(line.split(":")[0].replace("Game", "").strip())

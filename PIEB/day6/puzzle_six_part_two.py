@@ -28,7 +28,7 @@ def process_nb_way(file_path):
 
     return  product_of_ways
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_six.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_6.txt'
 total_ways = process_nb_way(file_path)
 
 print(f"Le total de possibilités des façons de battre les records pour la courses est : {total_ways}")

@@ -18,7 +18,7 @@ def somme_des_elements(liste):
 
 
 # Utilisation de l'exemple
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_two.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_2.txt'
 print(extract_calibration_values_from_file(file_path))
 all_sum = sum(extract_calibration_values_from_file(file_path))
 print(all_sum)

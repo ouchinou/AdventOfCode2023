@@ -22,7 +22,7 @@ def points_computation(win_cartes, own_cards):
 
 
 start = time.time()
-with open('../../Repository/AdventOfCode2023/Input/puzzle_four.txt', 'r') as file:
+with open('../../Repository/AdventOfCode2023/Input/puzzle_4.txt', 'r') as file:
     total_scratchcards = {}
     match = 0
     run = 0

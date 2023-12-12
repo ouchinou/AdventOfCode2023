@@ -46,5 +46,5 @@ def sum_part_numbers_from_file(file_path):
 
     return total
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_three.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_3.txt'
 print(sum_part_numbers_from_file(file_path))

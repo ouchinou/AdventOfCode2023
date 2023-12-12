@@ -26,5 +26,5 @@ def calculate_power_of_minimum_set(file_path):
                 total_power += power
     return total_power
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_two.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_2.txt'
 print(calculate_power_of_minimum_set(file_path))

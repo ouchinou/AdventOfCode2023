@@ -24,7 +24,7 @@ def process_nb_way(file_path):
 
     return results, product_of_ways
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_six.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_6.txt'
 results, total_ways = process_nb_way(file_path)
 
 for time, nb_beat_record in results:

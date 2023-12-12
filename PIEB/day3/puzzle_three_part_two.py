@@ -33,5 +33,5 @@ def calculate_gear_ratios_from_file(file_path):
     return total_ratio
 
 # Replace 'path_to_your_file.txt' with the path to your file
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_three.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_3.txt'
 print(f"Total Gear Ratio Sum: {calculate_gear_ratios_from_file(file_path)}")

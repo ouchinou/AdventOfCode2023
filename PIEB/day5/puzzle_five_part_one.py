@@ -43,7 +43,7 @@ def process_almanac(file_path):
 
     return seeds_info, lowest_location
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_five.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_5.txt'
 seeds_info, lowest_location = process_almanac(file_path)
 
 for info in seeds_info:

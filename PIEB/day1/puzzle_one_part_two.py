@@ -50,5 +50,5 @@ def extract_and_sum_calibration_values(file_path):
     return total_sum
 
 # Exemple d'utilisation
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_one.txt'
+file_path = '../../Repository/AdventOfCode2023/Input/puzzle_1.txt'
 print(extract_and_sum_calibration_values(file_path))
