@@ -1,6 +1,9 @@
-def compute_distance(time, time_hold):
+import time
+
+
+def compute_distance(total_time, time_hold):
     speed = 1 * time_hold
-    distance = (time - time_hold) * speed
+    distance = (total_time - time_hold) * speed
     #print(f"\nHold the button for {time_hold} speed are: {speed}, so distance is: {distance}")
     return distance
 
@@ -28,7 +31,13 @@ def process_nb_way(file_path):
 
     return  product_of_ways
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_6.txt'
+
+start = time.time()
+file_path = '../../Input/puzzle_6.txt'
 total_ways = process_nb_way(file_path)
 
 print(f"Le total de possibilités des façons de battre les records pour la courses est : {total_ways}")
+
+end = time.time()
+elapsed = end - start
+print(f"Time elapsed: {elapsed} seconds")

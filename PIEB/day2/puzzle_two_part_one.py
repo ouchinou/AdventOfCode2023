@@ -1,10 +1,10 @@
+import time
+
 POSSIBLE_CUBE_COUNT = {
     "red": 12,
     "green": 13,
     "blue": 14
 }
-
-RESULT = 0
 
 def is_game_possible(line: str) -> bool:
     subgames = line.split(":")[1].split(";")
@@ -15,12 +15,21 @@ def is_game_possible(line: str) -> bool:
                 return False
     return True
 
+def game_2(file_path):
+    total_game_id = 0
+    with open(file_path, 'r') as file:
+        for line in file:
+            if is_game_possible(line):
+                game_id = int(line.split(":")[0].replace("Game", "").strip())
+                print(f"Game {game_id} is possible")
+                total_game_id += game_id
 
-with open('../../Repository/AdventOfCode2023/Input/puzzle_2.txt', 'r') as file:
-    for index, line in enumerate(file):
-        if is_game_possible(line):
-            game_id = int(line.split(":")[0].replace("Game", "").strip())
-            print(f"Game {game_id} is possible")
-            RESULT += game_id
+    return total_game_id
 
-print(RESULT)
+start = time.time()
+file_path = '../../Input/puzzle_2.txt'
+result = game_2(file_path)
+print(result)
+end = time.time()
+elapsed = end - start
+print(f"elapsed time is {elapsed}")

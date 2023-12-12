@@ -1,3 +1,6 @@
+import time
+
+
 def extract_last_digits(text):
     word_to_digit = {
         'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
@@ -7,7 +10,7 @@ def extract_last_digits(text):
     current_word = ''
     for char in reversed(text):
         if char.isdigit():
-            return(char)
+            return (char)
         else:
             current_word = char.lower() + current_word  # Construire le mot à l'envers
             print(f'extract_last :{current_word}')
@@ -15,6 +18,7 @@ def extract_last_digits(text):
             if True in res:  # FOUND !
                 idx = [x in current_word for x in word_to_digit.keys()].index(True)
                 return idx
+
 
 def extract_first_digits(text):
     word_to_digit = {
@@ -25,7 +29,7 @@ def extract_first_digits(text):
     current_word = ''
     for char in text:
         if char.isdigit():
-            return(char)
+            return (char)
         else:
             current_word += char.lower()
             print(f'extract_first :{current_word}')
@@ -49,6 +53,11 @@ def extract_and_sum_calibration_values(file_path):
 
     return total_sum
 
-# Exemple d'utilisation
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_1.txt'
+
+start = time.time()
+file_path = '../../Input/puzzle_1.txt'
 print(extract_and_sum_calibration_values(file_path))
+
+end = time.time()
+elapsed = end - start
+print(f"elapsed time is {elapsed}")

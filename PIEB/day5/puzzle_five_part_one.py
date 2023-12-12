@@ -1,3 +1,6 @@
+import time
+
+
 def parse_map_section(lines):
     mapping = []
     for line in lines:
@@ -43,9 +46,14 @@ def process_almanac(file_path):
 
     return seeds_info, lowest_location
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_5.txt'
+
+start = time.time()
+file_path = '../../Input/puzzle_5.txt'
 seeds_info, lowest_location = process_almanac(file_path)
 
 for info in seeds_info:
     print(info)
 print(f"\nThe lowest location is: {lowest_location}")
+end = time.time()
+elapsed = end - start
+print(f"Time elapsed: {elapsed} seconds")

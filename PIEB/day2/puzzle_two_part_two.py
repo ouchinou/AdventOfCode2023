@@ -1,3 +1,6 @@
+import time
+
+
 def parse_game_description(description):
     # Splitting the description to separate the game number and the cube data
     _, cube_data = description.split(':', 1)
@@ -26,5 +29,9 @@ def calculate_power_of_minimum_set(file_path):
                 total_power += power
     return total_power
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_2.txt'
+start = time.time()
+file_path = '../../Input/puzzle_2.txt'
 print(calculate_power_of_minimum_set(file_path))
+end = time.time()
+elapsed = end - start
+print(f"elapsed time is {elapsed}")

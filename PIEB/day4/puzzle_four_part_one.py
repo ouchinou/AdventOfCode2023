@@ -16,17 +16,21 @@ def points_computation(win_cartes, own_cards):
             print(f"total_points = {total_points}")
     return total_points
 
-start = time.time()
-with open('../../Repository/AdventOfCode2023/Input/puzzle_4.txt', 'r') as file:
-    RESULT = 0
-    for line in file:
-        line = ' '.join(line.split())
-        line = line.split(":")[1].strip()
-        line = line.split("|")
-        print(line)
+def game_4(file_path):
+    with open(file_path, 'r') as file:
+        result = 0
+        for line in file:
+            line = ' '.join(line.split())
+            line = line.split(":")[1].strip()
+            line = line.split("|")
+            print(line)
 
-        RESULT += points_computation(line[0].strip(), line[1].strip())
-print(f"final result = {RESULT}")
+            result += points_computation(line[0].strip(), line[1].strip())
+
+
+start = time.time()
+file_path = '../../Input/puzzle_4.txt'
+print(f"Total Gear Ratio Sum: {game_4(file_path)}")
 end = time.time()
 elapsed = end - start
-print(f"time spent = {elapsed} seconds")
+print(f"Time elapsed: {elapsed} seconds")

@@ -1,3 +1,6 @@
+import time
+
+
 class BaseMapping:
     def __init__(self):
         self.ranges = []
@@ -77,6 +80,11 @@ def process_almanac(file_path):
     return None
 
 
-file_path = '../../Repository/AdventOfCode2023/Input/puzzle_5.txt'
+start = time.time()
+file_path = '../../Input/puzzle_5.txt'
 lowest_location = process_almanac(file_path)
 print(f"The lowest location is: {lowest_location}")
+
+end = time.time()
+elapsed = end - start
+print(f"Time elapsed: {elapsed} seconds")
