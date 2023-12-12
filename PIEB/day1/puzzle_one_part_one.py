@@ -19,7 +19,7 @@ def somme_des_elements(liste):
 
 
 start = time.time()
-file_path = '../../Input/puzzle_2.txt'
+file_path = '../day2/puzzle_2.txt'
 all_sum = sum(extract_calibration_values_from_file(file_path))
 print(all_sum)
 

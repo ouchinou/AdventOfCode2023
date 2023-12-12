@@ -30,7 +30,7 @@ def calculate_power_of_minimum_set(file_path):
     return total_power
 
 start = time.time()
-file_path = '../../Input/puzzle_2.txt'
+file_path = 'puzzle_2.txt'
 print(calculate_power_of_minimum_set(file_path))
 end = time.time()
 elapsed = end - start

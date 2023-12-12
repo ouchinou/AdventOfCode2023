@@ -27,7 +27,7 @@ def game_2(file_path):
     return total_game_id
 
 start = time.time()
-file_path = '../../Input/puzzle_2.txt'
+file_path = 'puzzle_2.txt'
 result = game_2(file_path)
 print(result)
 end = time.time()

@@ -33,7 +33,7 @@ def process_nb_way(file_path):
 
 
 start = time.time()
-file_path = '../../Input/puzzle_6.txt'
+file_path = 'puzzle_6.txt'
 total_ways = process_nb_way(file_path)
 
 print(f"Le total de possibilités des façons de battre les records pour la courses est : {total_ways}")

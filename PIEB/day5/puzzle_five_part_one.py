@@ -48,7 +48,7 @@ def process_almanac(file_path):
 
 
 start = time.time()
-file_path = '../../Input/puzzle_5.txt'
+file_path = 'puzzle_5.txt'
 seeds_info, lowest_location = process_almanac(file_path)
 
 for info in seeds_info:

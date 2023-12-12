@@ -29,7 +29,7 @@ def process_nb_way(file_path):
 
 
 start = time.time()
-file_path = '../../Input/puzzle_6.txt'
+file_path = 'puzzle_6.txt'
 results, total_ways = process_nb_way(file_path)
 
 for total_time, nb_beat_record in results:

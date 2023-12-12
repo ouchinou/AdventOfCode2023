@@ -50,7 +50,7 @@ def sum_part_numbers_from_file(file_path):
     return total
 
 start = time.time()
-file_path = '../../Input/puzzle_3.txt'
+file_path = 'puzzle_3.txt'
 print(sum_part_numbers_from_file(file_path))
 end = time.time()
 elapsed = end - start
