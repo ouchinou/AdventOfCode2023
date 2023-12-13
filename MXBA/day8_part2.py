@@ -4,8 +4,8 @@
 import os
 import itertools
 import re
+import math
 from dataclasses import dataclass
-from pprint import pprint as pp
 
 infile = "data_day8.txt"
 # infile = "exemple.txt"
@@ -48,8 +48,6 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), infile), "r")
         node_name, left, right = match.groups()
         node = Node(node_name, left, right)
         nodes[node.node_name] = node
-        # print(node)
-    # pp(nodes)
 
     # update Nodes with the real child nodes
     print("Update nodes...")
@@ -62,14 +60,19 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), infile), "r")
     nb_steps = 0
     current_nodes = [x for x in nodes.values() if x.is_start]
     print("\nSTART")
-    # pp(current_nodes)
-    direction_it = itertools.cycle(directions)
 
-    while False in [node.is_end for node in current_nodes]:
-        next_dir = next(direction_it)
-        current_nodes = [node.child(next_dir) for node in current_nodes]
-        nb_steps += 1
-        if (nb_steps % 100_000) == 0:
-            print(f"=> {nb_steps:_}")
+    # look for the number of steps that are necessary to reach the END
+    lcm = []
+    for node in current_nodes:
+        direction_it = itertools.cycle(directions)
+        nb_steps = 0
+        while not node.is_end:
+            node = node.child(next(direction_it))
+            nb_steps += 1
 
-    print(f"\n{nb_steps=}")
+        node.necessary_steps_number = nb_steps
+        lcm.append(nb_steps)
+        print(f"{node.node_name} => {node.necessary_steps_number}")
+
+    # find Lowes Common Multiple of all starting nodes
+    print(math.lcm(*lcm))
