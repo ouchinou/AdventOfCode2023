@@ -14,7 +14,6 @@ Pour maintenir une organisation claire et permettre à chacun de suivre facileme
 2. **Créez votre Dossier Personnel** : Créez un dossier portant votre nom d'utilisateur dans le repository cloné.
 3. **Ajoutez vos Solutions** : Chaque jour, ajoutez vos solutions au défi dans votre dossier personnel.
 4. **Commit et Push** : Faites un commit de vos changements et poussez-les sur votre fork.
-5. **Pull Request** : Créez une pull request pour fusionner vos solutions dans le repository principal.
 
 ## Collaboration et Discussion
 
