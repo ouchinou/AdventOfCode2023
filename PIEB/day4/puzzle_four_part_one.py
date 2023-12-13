@@ -29,7 +29,7 @@ def game_4(file_path):
 
 
 start = time.time()
-file_path = '../../Input/puzzle_4.txt'
+file_path = 'puzzle_4.txt'
 print(f"Total Gear Ratio Sum: {game_4(file_path)}")
 end = time.time()
 elapsed = end - start

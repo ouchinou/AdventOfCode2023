@@ -36,7 +36,7 @@ def calculate_gear_ratios_from_file(file_path):
     return total_ratio
 
 start = time.time()
-file_path = '../../Input/puzzle_3.txt'
+file_path = 'puzzle_3.txt'
 print(f"Total Gear Ratio Sum: {calculate_gear_ratios_from_file(file_path)}")
 
 end = time.time()

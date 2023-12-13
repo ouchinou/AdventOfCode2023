@@ -81,7 +81,7 @@ def process_almanac(file_path):
 
 
 start = time.time()
-file_path = '../../Input/puzzle_5.txt'
+file_path = 'puzzle_5.txt'
 lowest_location = process_almanac(file_path)
 print(f"The lowest location is: {lowest_location}")
 

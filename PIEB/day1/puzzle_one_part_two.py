@@ -55,7 +55,7 @@ def extract_and_sum_calibration_values(file_path):
 
 
 start = time.time()
-file_path = '../../Input/puzzle_1.txt'
+file_path = 'puzzle_1.txt'
 print(extract_and_sum_calibration_values(file_path))
 
 end = time.time()
