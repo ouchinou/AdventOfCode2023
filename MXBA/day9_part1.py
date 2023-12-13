@@ -13,8 +13,8 @@ class History:
     def __init__(self, line):
         self.values = [int(x) for x in line.split()]
 
-        print("*" * 20)
-        print(self.values)
+        # print("*" * 20)
+        # print(self.values)
 
         # compute
         diff_history = [self.values + [0]]
@@ -22,16 +22,16 @@ class History:
         diffs = self.get_diff(self.values)
         diff_history.append(diffs + [0])
 
-        print(diffs)
-        while np.sum(diffs) != 0:
+        # print(diffs)
+        while not all(n == 0 for n in diffs):
             diffs = self.get_diff(diffs)
             diff_history.append(diffs + [0])
-            print(diffs)
+            # print(diffs)
 
-        # print("-" * 20)
-        # pp(diff_history)
+        # # print("-" * 20)
+        # # pp(diff_history)
 
-        print("--- extrapolate ---")
+        # print("--- extrapolate ---")
         # extrapolate
         self.last_increase = 0
         for idx, hist_line in enumerate(diff_history[::-1]):
@@ -43,10 +43,9 @@ class History:
             else:
                 self.last_increase = hist_line[-2] + self.last_increase
             hist_line[-1] = self.last_increase
-            print(f"=> {hist_line}")
+            # print(f"=> {hist_line}")
 
     def get_diff(self, lst):
-        # return [abs(x) for x in np.diff(lst).tolist()]
         return [x for x in np.diff(np.asarray(lst, np.int64)).tolist()]
 
     def __str__(self):
@@ -61,11 +60,7 @@ with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), infile), "r")
     # create hads of cards
     history_list = [History(x).last_increase for x in lines]
     # for h in history_list:
-    #     print(h)
+    #     # print(h)
 
-    print(history_list)
-    print(np.sum(history_list))
-
-
-#     = 1992273689
-# abs = 1997810708
+    # print(history_list)
+    print(sum(history_list))
