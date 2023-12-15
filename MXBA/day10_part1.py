@@ -3,6 +3,7 @@
 # from collections import Counter
 import os
 import sys
+import time
 # import functools
 from pprint import pprint as pp
 
@@ -36,25 +37,28 @@ def recursive_find_path(nb_steps, current_position, board, from_symbol=None, fro
 
     # stop if this cell has already been processed: i.e an INTEGER is in the cell
     if isinstance(current_symbol, int):
-        # print(f"{current_symbol} => STOP")
-        return nb_steps
+        if (current_symbol == 0) and (nb_steps > 2):
+            return nb_steps
+        else:
+            # print(f"{current_symbol} => STOP")
+            return -1
 
     # stop if no pipe
     if current_symbol == ".":
         # print(f"{current_symbol} => STOP")
-        return nb_steps
+        return -1
 
     # check impossible connections
     if from_symbol is not None:
         # print(f"{neighbours[current_symbol]=}")
         if (from_direction == "N") and ("S" not in neighbours[current_symbol]):
-            return nb_steps
+            return -1
         elif (from_direction == "S") and ("N" not in neighbours[current_symbol]):
-            return nb_steps
+            return -1
         elif (from_direction == "W") and ("E" not in neighbours[current_symbol]):
-            return nb_steps
+            return -1
         elif (from_direction == "E") and ("W" not in neighbours[current_symbol]):
-            return nb_steps
+            return -1
         else:  # accepted move
             pass
 
@@ -62,35 +66,49 @@ def recursive_find_path(nb_steps, current_position, board, from_symbol=None, fro
     board[x][y] = nb_steps
 
     # explore all possible neighbours
-    max_steps = 0
+    max_steps = -1
     for neighbour in neighbours[current_symbol]:
         # print(f"{current_symbol} => {neighbour}")
         n_x = directions[neighbour][0]
         n_y = directions[neighbour][1]
+        # nb_steps = recursive_find_path(nb_steps + 1, [x + n_x, y + n_y], board, current_symbol, neighbour)
         max_steps = max(recursive_find_path(nb_steps + 1, [x + n_x, y + n_y], board, current_symbol, neighbour), max_steps)
+        # nodes_length.append(nodes_length)
+
+    # path to dead-end -> erase it
+    if max_steps == -1:
+        # clear symbol
+        board[x][y] = "."
 
     return max_steps
 
 
-with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), infile), "r") as puzzle_input:
+def main():
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), infile), "r") as puzzle_input:
 
-    # read puzzle input
-    lines = [[a for a in x.strip()] for x in puzzle_input.readlines()]
-    # pp(lines)
+        # read puzzle input
+        lines = [[a for a in x.strip()] for x in puzzle_input.readlines()]
+        # pp(lines)
 
-    # find the head of the animal
-    animal_pos = []
-    for row_idx, line in enumerate(lines):
-        if "S" in line:
-            animal_pos = [row_idx, line.index("S")]
+        # find the head of the animal
+        animal_pos = []
+        for row_idx, line in enumerate(lines):
+            if "S" in line:
+                animal_pos = [row_idx, line.index("S")]
 
-    # #print(history_list)
-    # print(f"{animal_pos=}")
+        # #print(history_list)
+        # print(f"{animal_pos=}")
 
-    # FORCE HIGHER recursion depth (defaut is 1_000)
-    sys.setrecursionlimit(1_000_000)
+        # FORCE HIGHER recursion depth (defaut is 1_000)
+        sys.setrecursionlimit(1_000_000)
 
-    pipe_length = recursive_find_path(0, animal_pos, lines, )
-    # pp(lines)
-    # print(f"{pipe_length=}")
-    print(f" max distance = {(pipe_length)//2}")
+        pipe_length = recursive_find_path(0, animal_pos, lines, )
+        # pp(lines)
+        # print(f"{pipe_length=}")
+        print(f" max distance = {(pipe_length)//2}")
+
+
+start_time = time.time()
+file_path = 'input'
+main()
+print("--- %s seconds ---" % (time.time() - start_time))
