@@ -109,6 +109,5 @@ def main():
 
 
 start_time = time.time()
-file_path = 'input'
 main()
 print("--- %s seconds ---" % (time.time() - start_time))

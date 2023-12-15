@@ -3,6 +3,8 @@ import sys
 import time
 import copy
 
+from helpers import write_to_file
+
 infile = "data_day10.txt"
 # infile = "exemple.txt"
 
@@ -22,18 +24,6 @@ neighbours = {"|": ["N", "S"],              # is a vertical pipe connecting nort
               ".": [],                      # is ground there is no pipe in this tile.
               "S": ["N", "S", "W", "E"],    # is the starting position of the animal there is a pipe on this tile, but your sketch doesn't show what shape the pipe has.}
               }
-
-
-def write_to_file(file_path, content):
-    try:
-        # Open the file in write mode ('w')
-        with open(file_path + ".txt", 'w') as file:
-            # Write the content to the file
-            for line in content:
-                print("".join(line), file=file)
-        print(f"Content successfully written to {file_path}")
-    except IOError as e:
-        print(f"Error writing to file: {e}")
 
 
 def recursive_find_path(nb_steps, current_position, board, lines, from_symbol=None, from_direction=None):
@@ -193,6 +183,5 @@ def main():
 
 
 start_time = time.time()
-file_path = 'input'
 main()
 print("--- %s seconds ---" % (time.time() - start_time))
