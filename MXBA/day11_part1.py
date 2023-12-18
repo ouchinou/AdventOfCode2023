@@ -81,9 +81,6 @@ def main():
             board[x, y] = idx + 1
         write_to_file("expanded2", board)
 
-        # # FORCE HIGHER recursion depth (defaut is 1_000)
-        # sys.setrecursionlimit(1_000_000)
-
         # process pairs of galaxies
         path_sum = 0
         for idx, pair in enumerate(itertools.combinations(galaxies.keys(), 2)):
