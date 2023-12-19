@@ -5,48 +5,33 @@ import os
 import time
 # import itertools
 
-# from helpers import write_to_file
-
 
 infile = "data_day12.txt"
 # infile = "exemple.txt"
 
 
-def get_arrangements(record):
-    # print(f"Processing '{record}'...")
+def process_arrangements(arrangement, broken_group):
+    if "?" not in arrangement:
+        return 1 if check_groups(arrangement, broken_group) else 0
 
-    if "?" not in record:
-        # print("DONE")
-        return [record]
-
-    results = []
-    next_unknown_idx = record.index("?")
-    # print(f"=> {next_unknown_idx=}")
+    results = 0
 
     # OPERATIONAL
-    new_record = record[:]  # copy
-    new_record[next_unknown_idx] = "."
-    results.extend(get_arrangements(new_record))
+    new_record = arrangement.replace("?", ".", 1)
+    results += process_arrangements(new_record, broken_group)
 
     # DAMAGED
-    new_record = record[:]  # copy
-    new_record[next_unknown_idx] = "#"
-    results.extend(get_arrangements(new_record))
+    new_record = arrangement.replace("?", "#", 1)
+    results += process_arrangements(new_record, broken_group)
 
     return results
 
 
-def check_groups(arrangement, broken_groups):
-    # print(f"=> {''.join(arrangement)} | {broken_groups}")
-
-    groups = "".join(arrangement).split(".")
-    # print(f"=> groups with empty elements: {groups}")
-    groups = [x for x in groups if len(x)]
-    # print(f"=> groups 'clean': {groups}")
-    groups_size = [len(x) for x in groups]
-    # print(f"=> groups 'size': {groups_size}")
-
-    return groups_size == broken_groups
+def check_groups(arrangement, broken_group):
+    group = arrangement.split(".")
+    group = [x for x in group if len(x)]
+    group_size = [len(x) for x in group]
+    return group_size == broken_group
 
 
 def main():
@@ -54,22 +39,24 @@ def main():
     result = 0
 
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), infile), "r") as puzzle_input:
-        lines = puzzle_input.readlines()
         # read puzzle input
+        lines = puzzle_input.readlines()
+
         with alive_progress.alive_bar(len(lines), spinner="classic", bar="squares") as bar:
             for line in lines:
-                records, broken_groups = line.strip().split(" ")
-                records = [x for x in records]
-                broken_groups = [int(x) for x in broken_groups.split(",")]
+                record, broken_group = line.strip().split(" ")
+                # record = [x for x in record]
+                broken_group = [int(x) for x in broken_group.split(",")]
+
+                # duplicate data
+                duplication = 1
+                record = record * duplication
+                broken_group = broken_group * duplication
 
                 # print(f"\n{records=} -> {broken_groups=}")
-                arrangements = get_arrangements(records)
+                res = process_arrangements(record, broken_group)
+                result += res
 
-                for i in arrangements:
-                    is_correct = check_groups(i, broken_groups)
-                    # print(f"=> {is_correct}\n")
-                    if is_correct:
-                        result += 1
                 bar()
 
         print(f"{result=}")
