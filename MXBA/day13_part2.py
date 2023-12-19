@@ -47,30 +47,19 @@ def main():
                 # print(f"\n{'*' * 10} ROW_{i:02d} {'*' * 10}\n")
                 up = p[:i]
                 down = p[i:]
-                # print(up)
-                # print("-" * up.shape[0])
-                # print(down)
-                # print()
 
                 # flip the "UP" list vertically
                 up_flipped = np.flipud(up)
-                # print(up_flipped)
-                # print("-" * up.shape[0])
-                # print(down)
-                # print()
 
                 # keep the same number as rows only
                 min_size = min(up_flipped.shape[0], down.shape[0])
                 final_up = up_flipped[:min_size]
                 final_down = down[:min_size]
-                # print(final_up)
-                # print("-" * len(up))
-                # print(final_down)
-                # print()
 
-                mirror_row = (final_up == final_down).all()
-                # print(f" OK ? {mirror_row}")
-                if mirror_row:
+                mirror_row = (final_up == final_down)
+                # print(mirror_row)
+                # print(np.count_nonzero(mirror_row))
+                if np.count_nonzero(~mirror_row) == 1:
                     rows.append(i)
 
             # look for mirror in COLUMNS
@@ -78,37 +67,26 @@ def main():
                 # print(f"\n{'*' * 10} COL_{i:02d} {'*' * 10}\n")
                 left = p[:, :i]
                 right = p[:, i:]
-                # print(left)
-                # print("-" * 10)
-                # print(right)
-                # print()
 
                 # flip the "LEFT" list horizontally
                 left_flipped = np.fliplr(left)
-                # print(left_flipped)
-                # print("-" * 10)
-                # print(right)
-                # print()
 
                 # keep the same number as rows only
                 min_size = min(left_flipped.shape[1], right.shape[1])
                 final_left = left_flipped[:, :min_size]
                 final_right = right[:, :min_size]
-                # print(final_left)
-                # print("-" * 10)
-                # print(final_right)
-                # print()
 
-                mirror_col = (final_left == final_right).all()
-                # print(f" OK ? {mirror_col}")
-                if mirror_col:
+                mirror_col = final_left == final_right
+                # print(mirror_col)
+                # print(np.count_nonzero(mirror_col))
+                if np.count_nonzero(~mirror_col) == 1:
                     columns.append(i)
 
         # print(f"{rows=}")
         # print(f"{columns=}")
 
         # compute result
-        result = np.sum(columns) + np.sum(rows * 100)
+        result = result = np.sum(columns) + np.sum(rows * 100)
         print(f"{result=}")
 
 
