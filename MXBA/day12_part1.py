@@ -45,13 +45,7 @@ def main():
         with alive_progress.alive_bar(len(lines), spinner="classic", bar="squares") as bar:
             for line in lines:
                 record, broken_group = line.strip().split(" ")
-                # record = [x for x in record]
                 broken_group = [int(x) for x in broken_group.split(",")]
-
-                # duplicate data
-                duplication = 1
-                record = record * duplication
-                broken_group = broken_group * duplication
 
                 # print(f"\n{records=} -> {broken_groups=}")
                 res = process_arrangements(record, broken_group)
