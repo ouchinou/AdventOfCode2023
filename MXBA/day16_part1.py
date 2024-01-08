@@ -7,7 +7,7 @@ import sys
 
 
 infile = "data_day16.txt"
-infile = "exemple.txt"
+# infile = "exemple.txt"
 
 
 directions = {"L": [0, -1],
@@ -45,7 +45,7 @@ def get_new_symbol(symbol, direction):
     if symbol in ["^", "v"] and direction in ["L", "R"]:
         return "2"
 
-    # reverse direction... stop or continue ???
+    # reverse direction: stop beam
     if (symbol == "<") and (direction == "R"):
         return ">"
     if (symbol == ">") and (direction == "L"):
@@ -55,73 +55,79 @@ def get_new_symbol(symbol, direction):
     if (symbol == "v") and (direction == "U"):
         return "^"
 
-    print(f"TRUC CHELOU : {symbol=} {direction=} ")
-    return "?"
 
+def move_beam(board, energized_board, x, y, going_to):
 
-def move_beam(board, energized_board, x, y, going_to, depth):
-    # helpers.write_to_file("debug", board)
-    # input("continue...")
-    print(f"{x=} {y=} {going_to=} {depth=}")
+    current_x = x
+    current_y = y
+    current_direction = going_to
 
-    # STOP CONDITION : out of board
-    if (x < 0) or (x >= board.shape[0]) or (y < 0) or (y >= board.shape[1]):
-        # print("STOP CONDITION : out of board")
-        return board
+    while True:
+        # print(f"{current_x=} {current_y=} {going_to=}")
+        # helpers.write_to_file("debug", board)
+        # helpers.write_to_file("result_energized", energized_board)
+        # input("continue...")
 
-    # check symbol on current
-    current_symbol = board[x, y]
+        # STOP CONDITION : out of board
+        if (current_x < 0) or (current_x >= board.shape[0]) or (current_y < 0) or (current_y >= board.shape[1]):
+            # print("STOP CONDITION : out of board")
+            break
 
-    # STOP CONDITION : same beam already in the same direction
-    if (board[x, y] == "2") or (current_symbol == get_new_symbol(".", going_to)):
-        # print("STOP CONDITION : same beam already in the same direction")
-        return board
+        # check symbol on current
+        current_symbol = board[current_x, current_y]
 
-    # Beam continues its path :)
-    if current_symbol == ".":
-        # print("Beam continues its path :)")
-        # If the beam encounters empty space (.), it continues in the same direction.
-        board[x, y] = get_new_symbol(current_symbol, going_to)
-        energized_board[x, y] = "#"
-        return move_beam(board, energized_board, *get_next_position(x, y, going_to), going_to, depth + 1)
+        # STOP CONDITION : same beam already in the same direction
+        if (board[current_x, current_y] == "2") or (current_symbol == get_new_symbol(".", current_direction)):
+            # print("STOP CONDITION : same beam already in the same direction")
+            break
 
-    elif current_symbol in ["/", "\\"]:
-        # print("mirrors / \\")
-        new_dir = mirrors[f"{going_to}{current_symbol}"]
-        energized_board[x, y] = "#"
-        return move_beam(board, energized_board, *get_next_position(x, y, new_dir), new_dir, depth + 1)
+        # Beam continues its path :)
+        if current_symbol == ".":
+            # print("Beam continues its path :)")
+            # If the beam encounters empty space (.), it continues in the same direction.
+            board[current_x, current_y] = get_new_symbol(current_symbol, current_direction)
+            energized_board[current_x, current_y] = "#"
+            current_x, current_y = get_next_position(current_x, current_y, current_direction)
 
-    elif current_symbol in ["-", "|"]:
-        energized_board[x, y] = "#"
+        elif current_symbol in ["/", "\\"]:
+            # print("mirrors / \\")
+            new_dir = mirrors[f"{current_direction}{current_symbol}"]
+            energized_board[current_x, current_y] = "#"
+            current_x, current_y = get_next_position(current_x, current_y, new_dir)
+            current_direction = new_dir
 
-        # same direction as beam
-        if (current_symbol == "-" and going_to in ["L", "R"]) or\
-                (current_symbol == "|" and going_to in ["U", "D"]):
-            # continue in the same direction
-            # print("mirrors -| : continue in the same direction")
-            return move_beam(board, energized_board, *get_next_position(x, y, going_to), going_to, depth + 1)
-        else:
-            # the beam is split into two beams
-            if current_symbol == "-":
-                # print("mirrors - : split")
-                board = move_beam(board, energized_board, x, y - 1, "L", depth + 1)
-                board = move_beam(board, energized_board, x, y + 1, "R", depth + 1)
-                return board
+        elif current_symbol in ["-", "|"]:
+            energized_board[current_x, current_y] = "#"
+
+            # same direction as beam
+            if (current_symbol == "-" and current_direction in ["L", "R"]) or\
+                    (current_symbol == "|" and current_direction in ["U", "D"]):
+                # continue in the same direction
+                # print("mirrors -| : continue in the same direction")
+                current_x, current_y = get_next_position(current_x, current_y, current_direction)
             else:
-                # print("mirrors | : split")
-                board = move_beam(board, energized_board, x - 1, y, "U", depth + 1)
-                board = move_beam(board, energized_board, x + 1, y, "D", depth + 1)
-                return board
-    else:
-        # Beam are crossing, continue in the same direction :)
-        # print("Beam are crossing, continue in the same direction :)")
-        new_symbol = get_new_symbol(current_symbol, going_to)
-        if new_symbol == "?":
-            # stop here in case the beam goes backward
-            return board
+                # the beam is split into two beams
+                if current_symbol == "-":
+                    # print("mirrors - : split")
+                    move_beam(board, energized_board, current_x, current_y - 1, "L")
+                    move_beam(board, energized_board, current_x, current_y + 1, "R")
+                    break
+                else:
+                    # print("mirrors | : split")
+                    move_beam(board, energized_board, current_x - 1, current_y, "U")
+                    move_beam(board, energized_board, current_x + 1, current_y, "D")
+                    break
+        else:
+            # Beam are crossing, continue in the same direction :)
+            # print("Beam are crossing, continue in the same direction :)")
+            new_symbol = get_new_symbol(current_symbol, current_direction)
+            if new_symbol == "?":
+                # stop here in case the beam goes backward
+                break
 
-        board[x, y] = new_symbol
-        return move_beam(board, energized_board, *get_next_position(x, y, going_to), going_to, depth + 1)
+            board[current_x, current_y] = new_symbol
+            energized_board[current_x, current_y] = "#"
+            current_x, current_y = get_next_position(current_x, current_y, current_direction)
 
 
 def main():
@@ -141,7 +147,7 @@ def main():
         # helpers.write_to_file("result", board)
 
         # The beam enters in the top-left corner from the left and heading to the right
-        move_beam(board=board, energized_board=energized_board, x=0, y=0, going_to="R", depth=0)
+        move_beam(board=board, energized_board=energized_board, x=0, y=0, going_to="R")
         # helpers.write_to_file("result", board)
 
     # count energized tiles
@@ -153,12 +159,7 @@ def main():
     print(f"{result=}")
 
 
-# FORCE HIGHER recursion depth (defaut is 1_000)
-sys.setrecursionlimit(100_000_000)
-
 if __name__ == '__main__':
     start_time = time.time()
-
     main()
-
     print("--- %s seconds ---" % (time.time() - start_time))
